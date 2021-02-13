@@ -1,0 +1,68 @@
+#Importar las librerías
+from sklearn import datasets
+#Importar la base de datos desde la librería sklearn
+dataset=datasets.load_breast_cancer()
+print(dataset)
+#ENTENDER LA DATA
+#VErificar la infromación contenida en el dataset
+print('Información de los datos: ')
+print(dataset.keys())
+print()
+#Verificar las características del dataset
+print('Características del dataset: ')
+print(dataset.DESCR)
+#ELECCIONAMOS LAS VARIABLES
+#Selecionamos todas las columnas
+X=dataset.data
+#Definimos la variable y
+y=dataset.target
+#IMplementación del algoritmo de regresión logística
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2)
+#Escalar los datos
+from sklearn.preprocessing import StandardScaler
+escalar=StandardScaler()
+X_train=escalar.fit_transform(X_train)
+X_test=escalar.transform(X_test)
+#IMportmaos y definimos el algoritmo que se usará
+from sklearn.linear_model import LogisticRegression
+algoritmo=LogisticRegression()
+#Entrenar el modelo
+algoritmo.fit(X_train, y_train)
+#Realizar una predicción
+y_pred=algoritmo.predict(X_test)
+#Verificar la matriz de confusión
+from sklearn.metrics import confusion_matrix
+matriz=confusion_matrix(y_test, y_pred)
+print('Matriz de confusión: ')
+print(matriz)
+#Precisión del modelo
+from sklearn.metrics import precision_score
+precision=precision_score(y_test, y_pred)
+print('Precisión del modelo: ')
+print(precision)
+#Calcular la exactirud del modelo
+from sklearn.metrics import accuracy_score
+exactirud=accuracy_score(y_test, y_pred)
+print('Exactirud del modelo: ')
+print(exactirud)
+#Calcular la sensibilidad del modelo
+from sklearn.metrics import recall_score
+sensibilidad=recall_score(y_test, y_pred)
+print('Sensibilidad del modelo: ')
+print(sensibilidad)
+#Calcular el puntaje F1 del modelo
+from sklearn.metrics import f1_score
+puntajef1=f1_score(y_test, y_pred)
+print('Puntaje F1: ')
+print(puntajef1)
+#Implementar las curva ROC - AUC del modelo
+from sklearn.metrics import roc_auc_score
+roc_auc= roc_auc_score(y_test, y_pred)
+print('Curva ROC - AUC del modelo: ')
+print(roc_auc)
+print('Precisión del modelo: ', precision)
+print('Exactirud del modelo: ', exactirud)
+print('Sensibilidad del modelo: ', sensibilidad)
+print('Puntaje F1: ', puntajef1)
+print('Curva ROC - AUC del modelo: ',roc_auc)
